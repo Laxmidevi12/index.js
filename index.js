@@ -22,7 +22,7 @@ registrationForm.addEventListener('submit', (event) => {
 
     if (!validateUserData(userData)) {
         const errorMessage = document.createElement('p');
-        errorMessage.textContent = 'Value must be 15/08/1947 or later';
+        errorMessage.textContent = 'Value must be 20/11/1987 or later';
         errorMessage.classList.add('error-message');
         const dateField = document.getElementById('dob');
         dateField.parentNode.appendChild(errorMessage);
