@@ -94,11 +94,11 @@ function updateUserDataTable() {
 function createUserDataTableRow(userData) {
     const row = document.createElement('tr');
     row.innerHTML = `
-        <td>${userData.name}</td>
-        <td>${userData.email}</td>
-        <td>${userData.password}</td>
-        <td>${userData.dob}</td>
-        <td>${userData.terms ? 'true' : 'false'}</td>
+        <td>${userData.Name}</td>
+        <td>${userData.Email}</td>
+        <td>${userData.Password}</td>
+        <td>${userData.Dob}</td>
+        <td>${userData.Accepted terms ? 'true' : 'false'}</td>
     `;
     return row;
 }
