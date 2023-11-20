@@ -1,108 +1,58 @@
-const registrationForm = document.getElementById('registration-form');
-const userDataTable = document.getElementById('user-data');
-const userDataTableBody = userDataTable.querySelector('tbody');
-const dobInput = document.getElementById('dob');
-const dobError = document.getElementById('dobError');
+let myForm = document.getElementById("my-form");
 
-// Load user data on page load
-window.addEventListener('load', () => {
-    updateUserDataTable();
-});
+const retrieveData = () => {
+    let data = localStorage.getItem("user-details");
+    if (data) {
+        data = JSON.parse(data);
+    } else {
+        data = [];
+    }
+    return data;
+}
 
-registrationForm.addEventListener('submit', (event) => {
+let userData = retrieveData();
+
+const displayData = () => {
+    const data = retrieveData();
+    let tableEntries = '';
+    for (const entry of data) {
+        const nameCell = `<td>${entry.fullName}</td>`;
+        const emailCell = `<td>${entry.userEmail}</td>`;
+        const passwordCell = `<td>${entry.userPassword}</td>`;
+        const dobCell = `<td>${entry.userDob}</td>`;
+        const acceptTermsCell = `<td>${entry.acceptTerms ? 'true' : 'false'}</td>`;
+
+        const row = `<tr>${nameCell}${emailCell}${passwordCell}${dobCell}${acceptTermsCell}</tr>`;
+        tableEntries += row;
+    }
+    const table = `<table><thead><tr><th>Full Name</th><th>Email</th><th>Password</th><th>Date of Birth</th><th>Accepted Terms?</th></tr></thead><tbody>${tableEntries}</tbody></table>`;
+    let details = document.getElementById("user-details");
+    details.innerHTML = table;
+}
+
+const saveForm = (event) => {
     event.preventDefault();
+    const fullName = document.getElementById("fullName").value;
+    const userEmail = document.getElementById("userEmail").value;
+    const userPassword = document.getElementById("userPassword").value;
+    const userDob = document.getElementById("userDob").value;
+    const acceptTerms = document.getElementById("acceptTerms").checked;
 
-    const userData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value,
-        dob: document.getElementById('dob').value,
-        terms: document.getElementById('terms').checked
+    const entry = {
+        fullName,
+        userEmail,
+        userPassword,
+        userDob,
+        acceptTerms
     };
 
-    if (!validateUserData(userData)) {
-        const errorMessage = document.createElement('p');
-        errorMessage.textContent = 'Value must be 20/11/1987 or later';
-        errorMessage.classList.add('error-message');
-        const dateField = document.getElementById('dob');
-        dateField.parentNode.appendChild(errorMessage);
-    } else {
-        saveUserData(userData);
-        updateUserDataTable();
-        clearForm();
-    }
-});
+    // Remove duplicate entries with the same email
+    userData = userData.filter((existingEntry) => existingEntry.userEmail !== userEmail);
 
-function validateUserData(userData) {
-    const minAge = 18;
-    const maxAge = 55;
-
-    const today = new Date();
-    const birthDate = new Date(userData.dob);
-    const age = today.getFullYear() - birthDate.getFullYear();
-
-    if (age < minAge || age > maxAge) {
-        return false;
-    }
-
-    return true;
+    userData.push(entry);
+    localStorage.setItem("user-details", JSON.stringify(userData));
+    displayData();
 }
 
-function saveUserData(userData) {
-    // Retrieve existing user data or initialize an empty array
-    const existingUserData = JSON.parse(localStorage.getItem('userList')) || [];
-    existingUserData.push(userData);
-
-    // Save the updated user data list to localStorage
-    localStorage.setItem('userList', JSON.stringify(existingUserData));
-}
-
-function updateUserDataTable() {
-    // Clear existing rows and headers in the table
-    userDataTableBody.innerHTML = '';
-
-    // Retrieve user data list from localStorage
-    const userList = JSON.parse(localStorage.getItem('userList')) || [];
-
-    // Display table headers
-    // if (userList.length > 0) {
-    //     const headerRow = document.createElement('tr');
-    //     headerRow.innerHTML = `
-    //         <th>Name</th>
-    //         <th>Email</th>
-    //         <th>Password</th>
-    //         <th>Dob</th>
-    //         <th>Accepted terms?</th>
-    //     `;
-    //     userDataTableBody.appendChild(headerRow);
-    // }
-
-    // Iterate through the user data list and create rows in the table
-    userList.forEach((userData) => {
-        const userDataRow = createUserDataTableRow(userData);
-        userDataTableBody.appendChild(userDataRow);
-    });
-
-    // Show the table if there is any user data
-    if (userList.length > 0) {
-        userDataTable.classList.remove('hidden');
-    } else {
-        userDataTable.classList.add('hidden');
-    }
-}
-
-function createUserDataTableRow(userData) {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-        <td>${userData.Name}</td>
-        <td>${userData.Email}</td>
-        <td>${userData.Password}</td>
-        <td>${userData.Dob}</td>
-        <td>${userData.Accepted terms ? 'true' : 'false'}</td>
-    `;
-    return row;
-}
-
-function clearForm() {
-    registrationForm.reset();
-}
+myForm.addEventListener("submit", saveForm);
+displayData();
