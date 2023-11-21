@@ -26,34 +26,34 @@ const displayData = () => {
     const data = retrieveData();
     let tableEntries = '';
     for (const entry of data) {
-        const nameCell = `<td>${entry.fullName}</td>`;
-        const emailCell = `<td>${entry.userEmail}</td>`;
-        const passwordCell = `<td>${entry.userPassword}</td>`;
-        const dobCell = `<td>${entry.userDob}</td>`;
-        const acceptTermsCell = `<td>${entry.acceptTerms ? 'true' : 'false'}</td>`;
+        const nameCell = `<td>${entry.name}</td>`;
+        const emailCell = `<td>${entry.email}</td>`;
+        const passwordCell = `<td>${entry.password}</td>`;
+        const dobCell = `<td>${entry.dob}</td>`;
+        const acceptTermsCell = `<td>${entry.accept terms ? 'true' : 'false'}</td>`;
 
         const row = `<tr>${nameCell}${emailCell}${passwordCell}${dobCell}${acceptTermsCell}</tr>`;
         tableEntries += row;
     }
-    const table = `<table><thead><tr><th>Full Name</th><th>Email</th><th>Password</th><th>Date of Birth</th><th>Accepted Terms?</th></tr></thead><tbody>${tableEntries}</tbody></table>`;
+    const table = `<table><thead><tr><th>Name</th><th>Email</th><th>Password</th><th>Dob</th><th>Accepted Terms?</th></tr></thead><tbody>${tableEntries}</tbody></table>`;
     let details = document.getElementById("user-details");
     details.innerHTML = table;
 }
 
 const saveForm = (event) => {
     event.preventDefault();
-    const fullName = document.getElementById("fullName").value;
-    const userEmail = document.getElementById("userEmail").value;
-    const userPassword = document.getElementById("userPassword").value;
-    const userDob = document.getElementById("userDob").value;
-    const acceptTerms = document.getElementById("acceptTerms").checked;
+    const fullName = document.getElementById("name").value;
+    const userEmail = document.getElementById("email").value;
+    const userPassword = document.getElementById("password").value;
+    const userDob = document.getElementById("dob").value;
+    const acceptTerms = document.getElementById("accept terms").checked;
 
     const entry = {
-        fullName,
-        userEmail,
-        userPassword,
-        userDob,
-        acceptTerms
+        name,
+        email,
+        password,
+        dob,
+        accept terms,
     };
 
     // Remove duplicate entries with the same email
