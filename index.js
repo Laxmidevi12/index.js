@@ -11,6 +11,42 @@ const retrieveData = () => {
 }
 
 let userData = retrieveData();
+ if (!validateUserData(userData)) {
+        const errorMessage = document.createElement('p');
+        errorMessage.textContent = 'Value must be 09/11/1967 or later';
+        errorMessage.classList.add('error-message');
+        const dateField = document.getElementById('dob');
+        dateField.parentNode.appendChild(errorMessage);
+    } else {
+        saveUserData(userData);
+        updateUserDataTable();
+        clearForm();
+    }
+});
+
+function validateUserData(userData) {
+    const minAge = 18;
+    const maxAge = 55;
+
+    const today = new Date();
+    const birthDate = new Date(userData.dob);
+    const age = today.getFullYear() - birthDate.getFullYear();
+
+    if (age < minAge || age > maxAge) {
+        return false;
+    }
+
+    return true;
+}
+
+function saveUserData(userData) {
+    // Retrieve existing user data or initialize an empty array
+    const existingUserData = JSON.parse(localStorage.getItem('userList')) || [];
+    existingUserData.push(userData);
+
+    // Save the updated user data list to localStorage
+    localStorage.setItem('userList', JSON.stringify(existingUserData));
+}
 
 const displayData = () => {
     const data = retrieveData();
