@@ -42,11 +42,11 @@ const displayData = () => {
 
 const saveForm = (event) => {
     event.preventDefault();
-    const fullName = document.getElementById("name").value;
-    const userEmail = document.getElementById("email").value;
-    const userPassword = document.getElementById("password").value;
-    const userDob = document.getElementById("dob").value;
-    const acceptTerms = document.getElementById("accept terms").checked;
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const dob = document.getElementById("dob").value;
+    const accept terms = document.getElementById("accept terms").checked;
 
     const entry = {
         name,
