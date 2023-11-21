@@ -10,37 +10,41 @@
             <div class="container1">
                 <center>
                     <h2>Registration form</h2>
-                    <form id="my-form">
+                    <form id="Registration-form" action="#">
+                        <div class="form-group">
                         <label for="name">Name</label>
-                        <input required type="text" id="name" name="fullName" placeholder="Enter full name">
-                        <br><br>
-
+                        <input  type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            
                         <label for="email">Email</label>
-                        <input required type="email" id="email" name="userEmail" placeholder="Enter email">
-                        <br><br>
-
+                        <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
                         <label for="password">Password</label>
-                        <input required type="password" id="password" name="userPassword" placeholder="Enter password">
-                        <br><br>
-
+                        <input type="password" id="password" name="password" required>
+                        </div>
+                         <div class="form-group">
                         <label for="dob">Dob</label>
-                        <input required type="date" id="dob" name="userDob" min="1968-11-21" max="2023-11-21"/>
-                        <br><br>
-                         <input required type="checkbox" id="accept terms" name="accept terms">
-                        <label for="accept terms">Accept Terms & Conditions</label>
-                        <br><br>
-
+                        <input type="date" id="dob" name="dob" required>
+                             <p id="dobError" class="error-message"></p>
+                         </div>
+                        <div class="form-group">
+                         
+                        <label for="terms"> class="checkbox-label">
+                            <input type="checkbox" id="terms" name="terms" reqiured>
+                            <span class="checkbox-text">I agree to the terms and conditions</span>
+                        </label>
+                        </div>
+                        
+                        <div class="button-disp">
                         <button type="submit">Submit</button>
                     </form>
-                </center>
-            </div>
-        </div>
         
-        <div>
-            <center>
-                <div class="container2">
+        <div class="entries">
+            <br></br>
                     <h2>Entries</h2>
-                    <table>
+                    <table id="user-data">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -50,10 +54,8 @@
                                 <th>Accepted terms?</th>
                             </tr>
                         </thead>
-                        <tbody id="user-details"></tbody>
+                        <tbody></tbody>
                     </table>
-                </div>
-            </center>
         </div>
         
         <script src="./index.js"></script>
